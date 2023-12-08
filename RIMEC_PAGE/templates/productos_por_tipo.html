@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}Productos de {{ tipo_calzado }}{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/listado_productos.css') }}">
+<script src="{{ url_for('static', filename='js/filtros_productos.js') }}" defer></script>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid d-flex">
+    <!-- Filtros de Marca y Color -->
+    <div class="filter-sidebar">
+        <h3>Filtros</h3>
+        <div>
+            <h4>Marca</h4>
+            {% for marca in marcas %}
+            <div class="form-check">
+                <input class="form-check-input marca-filter" type="checkbox" value="{{ marca }}" id="filter-marca-{{ marca }}">
+                <label class="form-check-label" for="filter-marca-{{ marca }}">
+                    {{ marca }}
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        <div>
+            <h4>Color</h4>
+            {% for color in colores %}
+            <div class="form-check">
+                <input class="form-check-input color-filter" type="checkbox" value="{{ color }}" id="filter-color-{{ color }}">
+                <label class="form-check-label" for="filter-color-{{ color }}">
+                    {{ color }}
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Grid de Productos -->
+    <div class="product-grid flex-grow-1">
+        {% for producto in productos %}
+        <div class="product-card" data-marca="{{ producto.DESCRIPCION_MARCA }}" data-color="{{ producto.DESCRIPCION_COR[:5] }}">
+            <a href="{{ url_for('detalle_producto', producto_id=producto.ID_ARTICULO) }}">
+                <img src="{{ url_for('static', filename='images/' + producto.IMAGEN) }}" alt="{{ producto.NOMBRE }}">
+            </a>
+            <div class="product-name">{{ producto.NOMBRE }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/') }}">
+{% endblock %}
+
+{% block content %}
+{% endblock %}
+
+
+def anadir_al_carrito(producto_id, cantidad):
+    carrito = obtener_items_del_carrito()
+    producto = obtener_producto_por_id(producto_id)  # Se mueve aquí para obtener el producto correcto
+    if producto:
+        for item in carrito:
+            if item['ID_ARTICULO'] == producto_id:
+                item['CANTIDAD'] += cantidad
+                break
+        else:
+            carrito.append({
+                'ID_ARTICULO': producto_id,
+                'CANTIDAD': cantidad,
+                'NOMBRE': producto['NOMBRE'],
+                'PRECIO': producto['PRECIO']
+            })
+        session['carrito'] = carrito
+        session.modified = True   # Indicar que la sesión ha sido modificada

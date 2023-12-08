@@ -1,0 +1,13 @@
+:root{
+    --azul: #001F3F;
+    --verde: #2ECC40;
+    --naranja: #FF851B;
+}
+
+.navbar .nav-link {
+    color: var(--naranja) !important; 
+}
+
+.navbar .nav-link:hover {
+    color: #ff9900 !important;
+}

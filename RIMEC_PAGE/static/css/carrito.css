@@ -1,0 +1,49 @@
+/* carrito.css */
+
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+.btn-danger {
+    color: white;
+    background-color: red;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    color: white;
+    background-color: blue;
+    border: none;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-eliminar:hover {
+    background-color: darkred;
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* Otras reglas y personalizaciones según sea necesario */

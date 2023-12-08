@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Productos de {{ marca }}
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/listado_productos.css') }}">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid d-flex">
+    <!-- Filtros de Tipo de Calzado y Color -->
+    <div class="filter-sidebar">
+        <h3>FILTROS</h3>
+        <h4>Tipos</h4>
+        {% for tipo in tipos_calzado %}
+        <div class="filter-option">
+            <input type="checkbox" id="tipo-{{ tipo }}" name="tipo" value="{{ tipo }}">
+            <label for="tipo-{{ tipo }}">{{ tipo }}</label>
+        </div>
+        {% endfor %}
+        <h4>Colores</h4>
+        {% for color in colores_disponibles %}
+        <div class="filter-option">
+            <input type="checkbox" id="color-{{ color }}" name="color" value="{{ color }}">
+            <label for="color-{{ color }}">{{ color }}</label>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Grid de Productos -->
+    <div class="product-grid">
+        {% for producto in productos %}
+        <div class="product-card" data-tipo="{{ producto.DESCRIPCION_GRUPO2 }}" data-color="{{ producto.DESCRIPCION_COR }}">
+            <a href="{{ url_for('detalle_producto', producto_id=producto.ID_ARTICULO) }}">
+                <img src="{{ url_for('static', filename='images/' + producto.IMAGEN) }}" alt="{{ producto.NOMBRE }}">
+            </a>
+            <div class="product-name">{{ producto.NOMBRE }}</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        // Filtrar por tipo y color
+        $('input[name="tipo"], input[name="color"]').on('change', function() {
+            var tiposSeleccionados = $('input[name="tipo"]:checked').map(function() { return $(this).val(); }).get();
+            var coloresSeleccionados = $('input[name="color"]:checked').map(function() { return $(this).val(); }).get();
+            $('.product-card').each(function() {
+                var tipoProducto = $(this).data('tipo');
+                var colorProducto = $(this).data('color');
+                var mostrarPorTipo = tiposSeleccionados.length === 0 || tiposSeleccionados.includes(tipoProducto);
+                var mostrarPorColor = coloresSeleccionados.length === 0 || coloresSeleccionados.includes(colorProducto);
+                if (mostrarPorTipo && mostrarPorColor) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
